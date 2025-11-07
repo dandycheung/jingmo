@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Date
 import java.util.Properties
@@ -147,17 +148,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
     }
-    kotlinOptions {
-        jvmTarget = "19"
+
+    //https://kotlinlang.org/docs/gradle-compiler-options.html#migrate-from-kotlinoptions-to-compileroptions
+    kotlin {
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_19) }
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
-   /* composeOptions {
-        // 参考 https://developer.android.google.cn/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }*/
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
