@@ -34,6 +34,11 @@ import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * 官方文档：
+ * https://developer.android.google.cn/develop/ui/views/appwidgets/overview?hl=zh-cn
+ * https://developer.android.google.cn/develop/ui/compose/glance/create-app-widget?hl=zh-cn
+ */
 @AndroidEntryPoint
 class ChineseIdiomWidgetReceiver : GlanceAppWidgetReceiver() {
 
@@ -59,10 +64,10 @@ class IdiomWidget(
         val idiom by repository.getRandom().collectAsState(initial = null)
         Column(
             modifier = modifier.fillMaxSize()
-                .background(GlanceTheme.colors.background)
+                .background(GlanceTheme.colors.widgetBackground)
                 .padding(16.dp)
                 .cornerRadius(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Top,
         ) {
             idiom?.let { entity ->
                 LazyColumn {
@@ -77,20 +82,20 @@ class IdiomWidget(
                     }
                     item {
                         Text(
-                            modifier = modifier.padding(4.dp),
+                            modifier = modifier.padding(top = 4.dp),
                             style = TextStyle(
                                 fontSize = 18.sp,
                                 color = GlanceTheme.colors.onBackground
                             ),
-                            text = entity.word
+                            text = entity.word.trim()
                         )
                     }
                     item {
                         entity.explanation?.let {
                             Text(
-                                modifier = modifier.padding(top = 8.dp),
+                                modifier = modifier.padding(top = 4.dp),
                                 style = TextStyle(
-                                    fontSize = 16.sp,
+                                    fontSize = 18.sp,
                                     color = GlanceTheme.colors.onBackground
                                 ),
                                 text = it

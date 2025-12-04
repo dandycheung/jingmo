@@ -67,7 +67,7 @@ class PoemWidget(
                 .background(GlanceTheme.colors.background)
                 .padding(16.dp)
                 .cornerRadius(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             poem?.let {
@@ -102,7 +102,7 @@ class PoemWidget(
                     }
                     item {
                         Text(
-                            modifier = modifier.padding(top = 8.dp),
+                            modifier = modifier.padding(top = 4.dp),
                             text = "${it.dynasty}·${it.author}",
                             style = TextStyle(
                                 fontSize = 12.sp,
@@ -112,7 +112,7 @@ class PoemWidget(
                     }
                     item {
                         Text(
-                            modifier = modifier.padding(top = 8.dp),
+                            modifier = modifier.padding(top =4.dp),
                             text = content,
                             style = TextStyle(
                                 fontSize = 18.sp,
