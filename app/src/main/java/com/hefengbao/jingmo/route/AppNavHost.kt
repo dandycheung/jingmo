@@ -9,10 +9,6 @@
 
 package com.hefengbao.jingmo.route
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -229,29 +225,9 @@ import com.hefengbao.jingmo.ui.screen.traditionalculture.solarterm.nav.tradition
 fun AppNavHost(
     navController: NavHostController
 ) {
-    val animationTime = 500
-
     NavHost(
         navController = navController,
         startDestination = ROUTE_HOME_GRAPH,
-        enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { it },
-                animationSpec = tween(durationMillis = animationTime)
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(durationMillis = animationTime)
-            )
-        },
-        popExitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { it },
-                animationSpec = tween(durationMillis = animationTime)
-            )
-        }
     ) {
         homeGraph(
             onBookmarkClick = navController::navigateToBookmarkIndexScreen,
@@ -642,7 +618,7 @@ fun AppNavHost(
                         )
                         classicalLiteratureSentenceSearchScreen(
                             onBackClick = navController::navigateUp,
-                            onCaptureClick = navController::navigateToClassicalLiteratureSentenceCaptureScreen,
+                            onCaptureClick = navController::navigateToClassicalLiteratureSentenceShowScreen,
                         )
                         classicalLiteratureSentenceShowScreen(
                             onBackClick = navController::navigateUp,
