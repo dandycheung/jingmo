@@ -84,7 +84,7 @@ class IdiomWidget(
                         Text(
                             modifier = modifier.padding(top = 4.dp),
                             style = TextStyle(
-                                fontSize = 18.sp,
+                                fontSize = 16.sp,
                                 color = GlanceTheme.colors.onBackground
                             ),
                             text = entity.word.trim()
@@ -95,7 +95,7 @@ class IdiomWidget(
                             Text(
                                 modifier = modifier.padding(top = 4.dp),
                                 style = TextStyle(
-                                    fontSize = 18.sp,
+                                    fontSize = 16.sp,
                                     color = GlanceTheme.colors.onBackground
                                 ),
                                 text = it

@@ -5,7 +5,7 @@
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minWidth="300dp"
     android:minHeight="110dp"
-    android:previewImage="@drawable/widget_idiom_preview"
+    android:previewImage="@drawable/widget_chinese_idiom_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="4"
     android:targetCellHeight="2"

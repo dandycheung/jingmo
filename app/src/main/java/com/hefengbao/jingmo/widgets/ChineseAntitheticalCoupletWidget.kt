@@ -20,7 +20,6 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
@@ -31,28 +30,27 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
+import com.hefengbao.jingmo.data.repository.chinese.AntitheticalCoupletRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- * 这里不能通过 @Inject  construct(private val repository: SentenceRepository) 的方式注入，如出现如下错误：
- *
- * Unable to instantiate receiver com.hefengbao.jingmo.widgets.ClassicalLiteratureSentenceWidgetReceiver: java.lang.InstantiationException: java.lang.Class<com.hefengbao.jingmo.widgets.ClassicalLiteratureSentenceWidgetReceiver> has no zero argument constructor
+ * 官方文档：
+ * https://developer.android.google.cn/develop/ui/views/appwidgets/overview?hl=zh-cn
+ * https://developer.android.google.cn/develop/ui/compose/glance/create-app-widget?hl=zh-cn
  */
-
 @AndroidEntryPoint
-class ClassicalLiteratureSentenceWidgetReceiver : GlanceAppWidgetReceiver() {
+class ChineseAntitheticalCoupletWidgetReceiver : GlanceAppWidgetReceiver() {
 
     @Inject
-    lateinit var repository: SentenceRepository
+    lateinit var repository: AntitheticalCoupletRepository
 
     override val glanceAppWidget: GlanceAppWidget
-        get() = SentenceWidget(repository)
+        get() = AntitheticalCoupletWidget(repository)
 }
 
-class SentenceWidget(
-    val repository: SentenceRepository
+class AntitheticalCoupletWidget(
+    val repository: AntitheticalCoupletRepository
 ) : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -63,17 +61,15 @@ class SentenceWidget(
 
     @Composable
     private fun Content(modifier: GlanceModifier = GlanceModifier) {
-        val sentence by repository.getRandom().collectAsState(initial = null)
+        val antitheticalCouplet by repository.getRandom().collectAsState(initial = null)
         Column(
             modifier = modifier.fillMaxSize()
                 .background(GlanceTheme.colors.widgetBackground)
-                .appWidgetBackground()
                 .padding(16.dp)
                 .cornerRadius(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalAlignment = Alignment.Top,
         ) {
-            sentence?.let { entity ->
+            antitheticalCouplet?.let { entity ->
                 LazyColumn {
                     item {
                         Text(
@@ -81,21 +77,8 @@ class SentenceWidget(
                                 fontSize = 16.sp,
                                 color = GlanceTheme.colors.onBackground
                             ),
-                            text = entity.content
-//                                .replace("，", "\n")
-//                                .replace("。", "\n")
-//                                .replace("？", "\n")
-//                                .replace("！", "\n")
-                        )
-                    }
-                    item {
-                        Text(
-                            modifier = modifier.padding(top = 4.dp),
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                color = GlanceTheme.colors.onBackground
-                            ),
-                            text = entity.from
+                            text = entity.body
+                                .replace("\n\n", "\n")
                         )
                     }
                 }

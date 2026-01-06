@@ -43,37 +43,59 @@
             android:value="${APP_CHANNEL}" />
 
         <receiver
+            android:name=".widgets.ChineseAntitheticalCoupletWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_chinese_antitheticalcouplet">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_chinese_antitheticalcouplet_info" />
+        </receiver>
+        <receiver
             android:name=".widgets.ChineseIdiomWidgetReceiver"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/widget_chinese_idiom">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/idiom_widget_info" />
+                android:resource="@xml/widget_chinese_idiom_info" />
         </receiver>
         <receiver
-            android:name=".widgets.ClassicalLiteraturePoemWidgetReceiver"
-            android:exported="false"
+            android:name=".widgets.ChineseQuoteWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_chinese_quote">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_chinese_quote_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.ClassicalLiteratureWritingWidgetReceiver"
+            android:exported="true"
             android:label="@string/widget_classicalliterature_writing">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/poem_widget_info" />
+                android:resource="@xml/widget_classicalliterature_writing_info" />
         </receiver>
         <receiver
             android:name=".widgets.ClassicalLiteratureSentenceWidgetReceiver"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/widget_classicalliterature_sentence">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/poem_sentence_widget_info" />
+                android:resource="@xml/widget_classicalliterature_sentence_info" />
         </receiver>
     </application>
 </manifest>

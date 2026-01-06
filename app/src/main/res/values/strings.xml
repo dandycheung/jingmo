@@ -25,7 +25,9 @@
     <string name="traditionalculture_color">传统色</string>
     <string name="traditionalculture_festival">节日</string>
     <string name="traditionalculture_solarterm">节气</string>
+    <string name="widget_chinese_antitheticalcouplet">对联</string>
     <string name="widget_chinese_idiom">成语</string>
+    <string name="widget_chinese_quote">句子</string>
     <string name="widget_classicalliterature_writing">诗文</string>
     <string name="widget_classicalliterature_sentence">诗文名句</string>
     <string name="feature_settings_loading">Loading…</string>

@@ -28,96 +28,67 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
-import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
+import com.hefengbao.jingmo.data.repository.chinese.QuoteRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * 官方文档：
+ * https://developer.android.google.cn/develop/ui/views/appwidgets/overview?hl=zh-cn
+ * https://developer.android.google.cn/develop/ui/compose/glance/create-app-widget?hl=zh-cn
+ */
 @AndroidEntryPoint
-class ClassicalLiteraturePoemWidgetReceiver : GlanceAppWidgetReceiver() {
+class ChineseQuoteWidgetReceiver : GlanceAppWidgetReceiver() {
 
     @Inject
-    lateinit var repository: WritingRepository
+    lateinit var repository: QuoteRepository
 
     override val glanceAppWidget: GlanceAppWidget
-        get() = PoemWidget(repository)
+        get() = QuoteWidget(repository)
 }
 
-class PoemWidget(
-    val repository: WritingRepository
+class QuoteWidget(
+    val repository: QuoteRepository
 ) : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-
         provideContent {
-            GlanceTheme {
-                Content()
-            }
+            Content()
         }
     }
 
     @Composable
     private fun Content(modifier: GlanceModifier = GlanceModifier) {
-        val poem by repository.get((1..1000000).random()).collectAsState(initial = null)
+        val quote by repository.getRandom().collectAsState(initial = null)
 
         Column(
             modifier = modifier.fillMaxSize()
                 .background(GlanceTheme.colors.widgetBackground)
                 .padding(16.dp)
                 .cornerRadius(16.dp),
-            verticalAlignment = Alignment.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            poem?.let {
-                val content = buildString {
-                    it.clauses.mapIndexed { index, clause ->
-                        if (it.type == "词") {// 词
-                            append(clause.content)
-                        } else { //律诗 绝句
-                            append(clause.content)
-
-                            if (index % 2 == 1) {
-                                append("\n")
-                            }
-                        }
-                        if (clause.breakAfter != null) {
-                            append("\n")
-                        }
-                    }
-                }
-                LazyColumn(
-                    horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
-                ) {
+            quote?.let { entity ->
+                LazyColumn {
                     item {
                         Text(
-                            text = it.title.content,
                             style = TextStyle(
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
                                 color = GlanceTheme.colors.onBackground
-                            )
+                            ),
+                            text = entity.content
                         )
                     }
                     item {
                         Text(
                             modifier = modifier.padding(top = 4.dp),
-                            text = "${it.dynasty}·${it.author}",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 color = GlanceTheme.colors.onBackground
-                            )
-                        )
-                    }
-                    item {
-                        Text(
-                            modifier = modifier.padding(top = 4.dp),
-                            text = content,
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                color = GlanceTheme.colors.onBackground
-                            )
+                            ),
+                            text = "${entity.author}·${entity.from}"
                         )
                     }
                 }
